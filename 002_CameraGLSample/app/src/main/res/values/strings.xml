@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CameraSample</string>
+    <string name="button_preview_start_text">start</string>
+    <string name="button_preview_stop_text">stop</string>
+</resources>
