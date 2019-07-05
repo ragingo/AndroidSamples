@@ -2,6 +2,7 @@ package com.ragingo.camerasample
 
 import android.Manifest
 import android.content.Context
+import android.graphics.SurfaceTexture
 import android.hardware.camera2.CameraCaptureSession
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraDevice
@@ -15,8 +16,9 @@ class Camera(ctx: Context) {
     private var cameraDevice: CameraDevice? = null
     private var cameraSession: CameraCaptureSession? = null
     private val cameraManager: CameraManager = ctx.getSystemService(Context.CAMERA_SERVICE) as CameraManager;
+    private var surface: Surface? = null
 
-    var surface: Surface? = null
+    var surfaceTexture: SurfaceTexture? = null
     var state: State = State.Close
         private set(value) {
             field = value
@@ -34,10 +36,22 @@ class Camera(ctx: Context) {
             return
         }
 
+        val characteristics = cameraManager.getCameraCharacteristics(cameraId)
+        val configMap = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
+        val size = configMap.getOutputSizes(SurfaceTexture::class.java).maxBy { it.width * it.height }
+
+        if (size == null) {
+            Log.e(TAG, "output size not found.")
+            return
+        }
+
+        surfaceTexture!!.setDefaultBufferSize(size.width, size.height)
+
         cameraManager.openCamera(cameraId, object: CameraDevice.StateCallback() {
             override fun onOpened(camera: CameraDevice) {
                 cameraDevice = camera
                 state = State.Open
+                surface = Surface(surfaceTexture)
 
                 createCameraCaptureSession()
             }
@@ -64,6 +78,7 @@ class Camera(ctx: Context) {
 
     private fun createCameraCaptureSession() {
         assert(cameraDevice != null)
+        assert(surfaceTexture != null)
         assert(surface != null)
         cameraDevice!!.createCaptureSession(listOf(surface), stateCallback, null)
     }

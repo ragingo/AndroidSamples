@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.annotation.RequiresPermission
 import android.util.Log
-import android.view.Surface
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -78,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     @RequiresPermission(Manifest.permission.CAMERA)
     private fun openCamera() {
         camera = Camera(this)
-        camera!!.surface = Surface(main_texture_view.surfaceTexture)
+        camera!!.surfaceTexture = main_texture_view.surfaceTexture
         camera!!.open()
     }
 
