@@ -2,4 +2,7 @@
     <string name="app_name">CameraSample</string>
     <string name="button_preview_start_text">start</string>
     <string name="button_preview_stop_text">stop</string>
+    <string name="button_preview_effect_none_text">none</string>
+    <string name="button_preview_effect_grayscale">grayscale</string>
+    <string name="button_preview_effect_binarization">binarization</string>
 </resources>
