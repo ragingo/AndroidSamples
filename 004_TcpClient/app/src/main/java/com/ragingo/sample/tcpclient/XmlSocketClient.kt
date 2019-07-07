@@ -89,7 +89,7 @@ class XmlSocketClient(private val host: String, private val port: Int, private v
                 (0 until buf.limit()).forEach { i ->
                     // 区切りの場所でリスナーに渡す
                     if (buf.get(i).toInt() == 0) {
-                        val msg = Charsets.UTF_8.decode(ByteBuffer.wrap(receivedBuffer.toByteArray())).toString()
+                        val msg = receivedBuffer.toByteArray().toString(Charsets.UTF_8)
                         onReceived(msg)
                         receivedBuffer.clear()
                     } else {
