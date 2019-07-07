@@ -18,5 +18,5 @@ class TabPagerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdap
 
     override fun getPageTitle(position: Int): CharSequence? = fragments[position].first
 
-    override fun getCount(): Int  = fragments.count()
+    override fun getCount(): Int = fragments.count()
 }

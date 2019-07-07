@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 class CommentaryListAdapter : RecyclerView.Adapter<CommentaryListAdapter.ViewHolder>() {
-    val comments : MutableList<String> = mutableListOf()
+    val comments: MutableList<String> = mutableListOf()
 
     companion object {
         const val ITEM_HEIGHT = 100

@@ -11,8 +11,11 @@ import kotlinx.coroutines.*
 
 class CommentaryListFragment : Fragment() {
 
+    var channelId: String = ""
+
     private val adapter = CommentaryListAdapter()
     private var currentJob: Job? = null
+    private var commentary: Commentary? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_commentary_list, container, false)
@@ -25,11 +28,12 @@ class CommentaryListFragment : Fragment() {
         commentary_list.clearDisappearingChildren()
 
         currentJob =
-            GlobalScope.launch(Dispatchers.Main) {
-                while (true) {
-                    delay(1000)
-                    for (i in 1..10) {
-                        adapter.comments.add(0, adapter.comments.size.toString())
+            GlobalScope.launch(Dispatchers.Default) {
+                commentary = Commentary(channelId)
+                commentary!!.subscribe {
+                    adapter.comments.add(0, it)
+                    if (adapter.comments.size > 1000) {
+                        adapter.comments.removeAt(adapter.comments.size - 1)
                     }
                     adapter.notifyDataSetChanged()
                 }
@@ -42,5 +46,7 @@ class CommentaryListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         currentJob?.cancel()
+        commentary?.dispose()
+        commentary = null
     }
 }
