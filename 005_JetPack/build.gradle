@@ -13,6 +13,7 @@ buildscript {
 
         // Google
         // https://dl.google.com/dl/android/maven2/index.html?hl=JA
+        archLifecycleVersion = '2.1.0'
         appCompatVersion = '1.1.0'
         constraintLayoutVersion = '2.0.0-beta2'
         ktxVersion = '1.1.0'
