@@ -22,6 +22,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{Integer.toString(vm.userInfo.age)}"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="click!"
+            android:onClick="@{() -> vm.addAge()}"/>
 
     </LinearLayout>
 </layout>

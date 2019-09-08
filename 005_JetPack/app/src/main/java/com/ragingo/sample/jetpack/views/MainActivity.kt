@@ -17,9 +17,9 @@ class MainActivity : AppCompatActivity() {
             DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         val vm = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        vm.userInfo.id = "u001"
-        vm.userInfo.name = "user 1"
-        vm.userInfo.age = 20
+        vm.userInfo.value!!.id = "u001"
+        vm.userInfo.value!!.name = "user 1"
+        vm.userInfo.value!!.age = 20
 
         bindings.vm = vm
         bindings.lifecycleOwner = this
