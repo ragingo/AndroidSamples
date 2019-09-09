@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ragingo.sample.jetpack.data.UserInfo
+import com.ragingo.sample.jetpack.viewmodels.common.UserViewModel
 
 class MainViewModel : ViewModel() {
 
@@ -12,13 +13,15 @@ class MainViewModel : ViewModel() {
         private val TAG = MainViewModel::class.simpleName
     }
 
-    private val _userInfo = MutableLiveData(UserInfo())
-    val userInfo: LiveData<UserInfo> = _userInfo
+    private val _userInfo = MutableLiveData(UserViewModel())
+    val userInfo: LiveData<UserViewModel> = _userInfo
 
     fun addAge() {
         Log.d(TAG, "addAge")
-        val info = _userInfo.value!!
-        info.age++
-        _userInfo.postValue(info)
+        _userInfo.value?.let {
+            x -> x.age.value?.let {
+                y -> x.age.value = y + 1;
+            }
+        }
     }
 }

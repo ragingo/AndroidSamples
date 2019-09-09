@@ -31,6 +31,10 @@
             android:text="click!"
             android:onClick="@{() -> vm.addAge()}"
             app:foo="@{vm.userInfo.age}"/>
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progress="@={vm.userInfo.age}"/>
 
     </LinearLayout>
 </layout>

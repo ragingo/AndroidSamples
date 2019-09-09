@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.ragingo.sample.jetpack.R
 import com.ragingo.sample.jetpack.data.UserInfo
 import com.ragingo.sample.jetpack.databinding.ActivityMainBinding
+import com.ragingo.sample.jetpack.viewmodels.common.UserViewModel
 import com.ragingo.sample.jetpack.viewmodels.main.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -29,9 +30,7 @@ class MainActivity : AppCompatActivity() {
         user1.age = 20
 
         val vm = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        vm.userInfo.value!!.id = user1.id
-        vm.userInfo.value!!.name = user1.name
-        vm.userInfo.value!!.age = user1.age
+        vm.userInfo.value!!.loadFromModel(user1)
         vm.userInfo.observe(this, Observer {
             Log.d(TAG, "${it.id}, ${it.name}, ${it.age}")
         })
