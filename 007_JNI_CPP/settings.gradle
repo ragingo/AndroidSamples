@@ -1,0 +1,2 @@
+include ':app', ':native'
+rootProject.name='007_JNI_CPP'
