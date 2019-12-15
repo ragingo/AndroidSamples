@@ -11,6 +11,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        textView.text = NativeFunctions.ret100().toString()
+        val str =
+            NativeFunctions.ret100().toString() + "\n" +
+            NativeFunctions.dpi().toString() + "\n" +
+            NativeFunctions.fpi().toString() + "\n" +
+            NativeFunctions.lpi().toString() + "\n" +
+            NativeFunctions.ipi().toString() + "\n"
+
+        textView.text = str
     }
 }
