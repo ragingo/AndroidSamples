@@ -5,6 +5,7 @@ object NativeFunctions {
         System.loadLibrary("native")
     }
     external fun ret100(): Int
+    external fun pow(x: Int, y: Int): Int
     external fun dpi(): Double
     external fun fpi(): Float
     external fun lpi(): Long
