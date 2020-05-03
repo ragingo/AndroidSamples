@@ -1,10 +1,10 @@
 package com.ragingo.sample.tcpclient
 
 import android.graphics.Typeface
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 
 class CommentaryListAdapter : RecyclerView.Adapter<CommentaryListAdapter.ViewHolder>() {
     val comments: MutableList<String> = mutableListOf()
@@ -30,6 +30,5 @@ class CommentaryListAdapter : RecyclerView.Adapter<CommentaryListAdapter.ViewHol
         item.text = comments[index]
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    }
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }

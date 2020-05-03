@@ -11,7 +11,7 @@ typealias CommentReceiveCallback = (String) -> Unit
 class Commentary(private val channelId: String) : XmlSocketListener {
 
     private companion object {
-        val TAG = "Commentary"
+        const val TAG = "Commentary"
         const val API_URL = "http://jk.nicovideo.jp/api/v2/getflv"
         const val DEFAULT_CONNECTION_TIMEOUT = 3000
         const val DEFAULT_READ_TIMEOUT = 3000
@@ -21,8 +21,7 @@ class Commentary(private val channelId: String) : XmlSocketListener {
         }
 
         private fun createConnection(url: String): URLConnection {
-            val url = URL(url)
-            val conn = url.openConnection()
+            val conn = URL(url).openConnection()
             conn.connectTimeout = DEFAULT_CONNECTION_TIMEOUT
             conn.readTimeout = DEFAULT_READ_TIMEOUT
             return conn

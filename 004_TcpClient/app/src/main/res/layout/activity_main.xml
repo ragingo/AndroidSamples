@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
             app:tabMode="scrollable"
             app:tabInlineLabel="false"
             android:layout_height="50dp" android:layout_width="0dp" app:layout_constraintEnd_toEndOf="parent"
@@ -15,7 +15,7 @@
             android:id="@+id/tabLayout" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/tabPager" app:layout_constraintHorizontal_bias="0.0"
             android:background="#2196F3"/>
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:id="@+id/tabPager"
@@ -25,4 +25,4 @@
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="24dp"
             android:background="#AD6778D1"/>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

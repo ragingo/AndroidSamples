@@ -13,7 +13,6 @@ import java.nio.channels.Selector
 import java.nio.channels.SocketChannel
 import java.util.*
 
-
 interface XmlSocketListener {
     fun onConnected()
     fun onReceived(msg: String)
@@ -178,5 +177,4 @@ class XmlSocketClient(private val host: String, private val port: Int, private v
 
 }
 
-class MainThreadHandler : Handler(Looper.getMainLooper()) {
-}
+class MainThreadHandler : Handler(Looper.getMainLooper())

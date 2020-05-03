@@ -1,8 +1,7 @@
 package com.ragingo.sample.tcpclient
 
 object NiconicoJikkyo {
-    data class ChannelInfo(val id: String, val name: String) {
-    }
+    data class ChannelInfo(val id: String, val name: String)
 
     val TvChannels: Array<ChannelInfo> = arrayOf(
         ChannelInfo("jk1", "NHK総合"),
