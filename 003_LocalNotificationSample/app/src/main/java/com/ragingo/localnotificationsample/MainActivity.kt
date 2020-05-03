@@ -9,14 +9,14 @@ import android.graphics.*
 import android.media.AudioAttributes
 import android.net.Uri
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.annotation.RequiresApi
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
 import android.util.DisplayMetrics
 import android.util.Size
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 import java.io.InputStream
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
             setDefaults(Notification.DEFAULT_LIGHTS and Notification.DEFAULT_VIBRATE)
             setLights(Color.parseColor("#5577ff"), 100, 100)
             setVibrate(longArrayOf(0))
-            setVisibility(Notification.VISIBILITY_PUBLIC)
+//            setVisibility(Notification.VISIBILITY_PUBLIC)
             setSound(soundUri)
             setAutoCancel(true)
 //            setContentIntent()
@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun downloadImage(url: String) : Bitmap? {
-        var imageUrl: URL?
+        val imageUrl: URL?
         try {
             imageUrl = URL(url)
         }
@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
             return null
         }
 
-        var conn : URLConnection?
+        val conn : URLConnection?
         try {
             conn = imageUrl.openConnection()
         }
@@ -150,14 +150,18 @@ class MainActivity : AppCompatActivity() {
         return bmp
     }
 
-    private fun createBitmap(inputStream: InputStream) : Bitmap {
+    private fun createBitmap(inputStream: InputStream) : Bitmap? {
+        val opts = BitmapFactory.Options()
+        val bmp = BitmapFactory.decodeStream(inputStream, null, opts)
+        if (bmp === null) {
+            return null
+        }
+
         val windowManager: WindowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val display = windowManager.defaultDisplay
         val metrics = DisplayMetrics()
         display.getMetrics(metrics)
 
-        val opts = BitmapFactory.Options()
-        val bmp = BitmapFactory.decodeStream(inputStream, null, opts)
         val size = Size(opts.outWidth, opts.outHeight)
         val base = Bitmap.createBitmap(MAX_WIDTH_DP, MAX_HEIGHT_DP, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(base)
