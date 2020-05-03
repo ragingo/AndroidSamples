@@ -3,17 +3,14 @@ package com.ragingo.camerasample2
 import android.opengl.GLES31
 import android.util.Log
 
-
-abstract class ShaderBase(sourceCode: String = "") {
+abstract class ShaderBase(private var sourceCode: String = "") {
 
     companion object {
         const val INVALID_HANDLE = 0
     }
 
     var handle = 0
-        private set(value) { field = value }
-
-    var sourceCode = sourceCode
+        private set
 
     protected abstract val shaderType: Int
 
@@ -24,7 +21,7 @@ abstract class ShaderBase(sourceCode: String = "") {
         GLES31.glShaderSource(handle, trimmedSourceCode)
         GLES31.glCompileShader(handle)
 
-        var result = intArrayOf(0)
+        val result = intArrayOf(0)
         GLES31.glGetShaderiv(handle, GLES31.GL_COMPILE_STATUS, result, 0)
 
         if (result[0] == 0) {

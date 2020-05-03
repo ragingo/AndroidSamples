@@ -4,9 +4,9 @@ import android.Manifest
 import android.content.Context
 import android.graphics.SurfaceTexture
 import android.hardware.camera2.*
-import android.support.annotation.RequiresPermission
 import android.util.Log
 import android.view.Surface
+import androidx.annotation.RequiresPermission
 
 class Camera(ctx: Context) {
 

@@ -5,19 +5,18 @@ import android.opengl.GLSurfaceView
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-
 open class SurfaceRender : GLSurfaceView.Renderer {
 
     val shaders = mutableListOf<ShaderBase>()
 
     var programHandle = 0
-        private set(value) { field = value }
+        private set
 
     var screenWidth = 0
-        private set(value) { field = value }
+        private set
 
     var screenHeight = 0
-        private set(value) { field = value }
+        private set
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         programHandle = GLES31.glCreateProgram()
@@ -30,7 +29,6 @@ open class SurfaceRender : GLSurfaceView.Renderer {
 
         GLES31.glLinkProgram(programHandle)
         GLES31.glUseProgram(programHandle)
-
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {

@@ -5,15 +5,14 @@ import android.app.Activity
 import android.graphics.SurfaceTexture
 import android.opengl.GLES11Ext
 import android.opengl.GLES31
-import android.support.annotation.RequiresPermission
 import android.view.Surface
+import androidx.annotation.RequiresPermission
 import java.nio.FloatBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-class CameraSurfaceRender(activity: Activity) : SurfaceRender() {
+class CameraSurfaceRender(private val activity: Activity) : SurfaceRender() {
 
-    private val activity = activity
     private var surfaceTexture: SurfaceTexture? = null
     private var textureId = 0
     private var vertexBuffer = FloatBuffer.allocate(0)

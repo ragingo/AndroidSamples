@@ -9,7 +9,7 @@ class GraphicsUtils {
 
     companion object {
         fun makeTexture(): Int {
-            var texIds = intArrayOf(0)
+            val texIds = intArrayOf(0)
             GLES31.glGenTextures(1, texIds, 0)
             return texIds[0]
         }
@@ -26,9 +26,9 @@ class GraphicsUtils {
         }
 
         fun makeVertexBuffer(x: Int, y: Int, width: Int, height: Int, screenWidth: Int, screenHeight: Int): FloatBuffer {
-            var left = (x.toFloat() / screenWidth.toFloat()) * 2.0f - 1.0f;
+            val left = (x.toFloat() / screenWidth.toFloat()) * 2.0f - 1.0f;
             var top = (y.toFloat() / screenHeight.toFloat()) * 2.0f - 1.0f;
-            var right = ((x + width).toFloat() / screenWidth.toFloat()) * 2.0f - 1.0f;
+            val right = ((x + width).toFloat() / screenWidth.toFloat()) * 2.0f - 1.0f;
             var bottom = ((y + height).toFloat() / screenHeight.toFloat()) * 2.0f - 1.0f;
             top = -top;
             bottom = -bottom;
