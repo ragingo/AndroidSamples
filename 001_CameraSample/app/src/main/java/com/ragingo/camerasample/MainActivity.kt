@@ -2,11 +2,11 @@ package com.ragingo.camerasample
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.annotation.RequiresPermission
 import android.util.Log
 import android.view.Surface
+import androidx.annotation.RequiresPermission
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +18,8 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
             if (camera!!.state != Camera.State.Open &&
-                camera!!.state != Camera.State.Capture) {
+                camera!!.state != Camera.State.Capture
+            ) {
                 return false
             }
             return true
@@ -37,8 +38,7 @@ class MainActivity : AppCompatActivity() {
         if (isCameraRunning) {
             stopPreview()
             main_preview_button.text = getString(R.string.button_preview_start_text)
-        }
-        else {
+        } else {
             if (startPreview()) {
                 main_preview_button.text = getString(R.string.button_preview_stop_text)
             }
@@ -61,7 +61,11 @@ class MainActivity : AppCompatActivity() {
         closeCamera()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         if (grantResults.isEmpty()) {
             return;
         }
@@ -69,8 +73,7 @@ class MainActivity : AppCompatActivity() {
             if (grantResults.first() == PackageManager.PERMISSION_GRANTED) {
                 changeCameraState()
             }
-        }
-        else {
+        } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
     }
@@ -86,6 +89,7 @@ class MainActivity : AppCompatActivity() {
         if (camera == null) {
             return
         }
+        camera!!.surface?.release()
         camera!!.close()
         camera = null
     }
