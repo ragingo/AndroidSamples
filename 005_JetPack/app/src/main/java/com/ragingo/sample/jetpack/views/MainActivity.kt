@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.ragingo.sample.jetpack.R
 import com.ragingo.sample.jetpack.data.UserInfo
 import com.ragingo.sample.jetpack.databinding.ActivityMainBinding
-import com.ragingo.sample.jetpack.viewmodels.common.UserViewModel
 import com.ragingo.sample.jetpack.viewmodels.main.MainViewModel
 
 class MainActivity : AppCompatActivity() {
