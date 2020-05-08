@@ -1,7 +1,10 @@
 package com.ragingo.sample.googlemap
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -18,6 +21,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     // https://developer.android.com/training/location/retrieve-current?hl=ja
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    companion object {
+        private const val PERMISSION_REQUEST_CODE = 1
+        private val TAG = MapsActivity::class.java.simpleName
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
@@ -28,6 +36,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         gpsButton.setOnClickListener { onGpsButtonClick() }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode != PERMISSION_REQUEST_CODE) {
+            return
+        }
+
+        val result = permissions.filterIndexed { i, _ ->
+            grantResults[i] == PackageManager.PERMISSION_GRANTED
+        }
+
+        if (!result.any { it == Manifest.permission.ACCESS_FINE_LOCATION }) {
+            Log.d(TAG, "ACCESS_FINE_LOCATION が許可されてない")
+        }
     }
 
     override fun onStart() {
@@ -73,6 +101,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun onGpsButtonClick() {
+        val granted =
+            checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        if (!granted) {
+            val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+            requestPermissions(permissions, PERMISSION_REQUEST_CODE)
+            return
+        }
+
         val req = LocationRequest()
         req.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
