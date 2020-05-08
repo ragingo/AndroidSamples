@@ -16,15 +16,20 @@ android {
         versionName "1.0.0"
     }
 
+    Properties localProps = new Properties()
+    localProps.load(project.rootProject.file("local.properties").newDataInputStream())
+
     buildTypes {
         debug {
             minifyEnabled false
             applicationIdSuffix ".debug"
             versionNameSuffix " (debug)"
+            resValue "string", "google_maps_key", localProps.getProperty("googlemap.develop.apikey", "")
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "google_maps_key", localProps.getProperty("googlemap.prod.apikey", "")
         }
     }
 
