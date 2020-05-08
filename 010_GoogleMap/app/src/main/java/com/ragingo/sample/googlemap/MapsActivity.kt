@@ -1,22 +1,33 @@
 package com.ragingo.sample.googlemap
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_maps.*
 import java.util.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+    private var googleMap: GoogleMap? = null
+    // https://developer.android.com/training/location/retrieve-current?hl=ja
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        gpsButton.setOnClickListener { onGpsButtonClick() }
     }
 
     override fun onStart() {
@@ -50,14 +61,45 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
+        this.googleMap = googleMap
         createPrefectures()
             .forEach {
                 val latlng = LatLng(it.lat, it.lng)
                 googleMap.addMarker(MarkerOptions().position(latlng).title(it.capital))
                 if (it.name.toLowerCase(Locale.ROOT) == "tokyo") {
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(latlng))
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13f))
                 }
             }
+    }
+
+    private fun onGpsButtonClick() {
+        val req = LocationRequest()
+        req.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+
+        val callback = object: LocationCallback() {
+            override fun onLocationAvailability(value: LocationAvailability?) {
+                super.onLocationAvailability(value)
+                println("onLocationAvailability: ${value?.isLocationAvailable}")
+            }
+            override fun onLocationResult(value: LocationResult?) {
+                fusedLocationClient.removeLocationUpdates(this)
+
+                value ?: return
+                val latlng = LatLng(value.lastLocation.latitude, value.lastLocation.longitude)
+                val circleOpts = CircleOptions()
+                    .center(latlng)
+                    .radius(1000.0)
+                    .fillColor(Color.argb(0x7f, 0, 0xff, 0))
+                    .strokeColor(Color.BLUE)
+                    .strokeWidth(20f)
+                googleMap?.clear()
+                googleMap?.addMarker(MarkerOptions().position(latlng))
+                googleMap?.addCircle(circleOpts)
+                googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13f))
+            }
+        }
+
+        fusedLocationClient.requestLocationUpdates(req, callback, null)
     }
 
     private fun createPrefectures(): List<Prefecture> {
