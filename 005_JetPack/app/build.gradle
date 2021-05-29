@@ -43,6 +43,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
+    // TODO: lifecycle-extensions サポート終了 https://developer.android.com/jetpack/androidx/releases/lifecycle?hl=ja
     implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
